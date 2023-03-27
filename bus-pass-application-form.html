@@ -1,0 +1,227 @@
+<html>
+	<head>
+        <meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta http-equiv="x-ua-compatible" content="ie=edge">
+		<title>Material Design Bootstrap</title>
+		<!-- Font Awesome -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<!-- Bootstrap core CSS -->
+		<link href="MDB-Free/css/bootstrap.min.css" rel="stylesheet">
+		<!-- Material Design Bootstrap -->
+		<link href="MDB-Free/css/mdb.min.css" rel="stylesheet">
+		<!-- Your custom styles (optional) -->
+		<link href="MDB-Free/css/style.css" rel="stylesheet">		
+        <script src="scripts/application-submitted-status.js"></script>
+
+		<style>
+            <!-- This is used for date-picker -->
+            [type="date"] {
+              background:#fff url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/calendar_2.png)  97% 50% no-repeat ;
+            }
+            [type="date"]::-webkit-inner-spin-button {
+              display: none;
+            }
+            [type="date"]::-webkit-calendar-picker-indicator {
+              opacity: 5;
+            }
+
+            /* custom styles */
+            label {
+              display: block;
+            }
+            input {
+              border: 1px solid #c4c4c4;
+              border-radius: 5px;
+              background-color: #fff;
+              padding: 3px 5px;
+              box-shadow: inset 0 3px 6px rgba(0,0,0,0.1);
+              width: 190px;
+            }
+		
+		</style>
+		
+	</head>
+
+	<body onload="isSubmitted(getURL()), getApplicationNo()">
+		<nav class="navbar navbar-expand-lg navbar-dark primary-color">
+			<a class="navbar-brand" href="#">Bus Pass</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav" aria-controls="basicExampleNav"
+				aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="basicExampleNav">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item">
+						<a class="nav-link" onclick="goToDashboard()">Dashboard
+						</a>
+					</li>
+					<li class="nav-item active">
+						<a class="nav-link" onclick="goToBusPassApplicationForm()">Application Form
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" onclick="goToCheckStatus()">Check Status</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" onclick="goToLogoutPage()">Logout</a>
+					</li>
+				</ul>
+
+			</div>
+		</nav>
+		
+		<br>
+		<div class="container">
+			<div class="jumbotron" style="background: linear-gradient(to bottom, #ccffcc 0%, #ffffff 100%);">
+				<section class="section">
+					<h2 class="h2-responsive font-weight-bold text-center my-5">PMT Bus Pass Form</h2>
+					<div class="row">
+						<div class="col-md-12 mb-md-0 mb-5">
+						
+							<form id="contact-form" name="busPassForm" method="POST" enctype="multipart/form-data">
+								<div class="row">
+									<div class="col-md-6">
+										<div class="md-form mb-0">
+                                            <input type="hidden" id="applicationNo" name="applicationNo" value="">
+											<input type="text" id="name" name="passengerName" class="form-control" onchange="nameValidation()" required>
+											<label for="name" class="">Passenger Name</label>
+										</div>
+									</div>
+
+									<div class="col-md-6">
+										<div class="md-form mb-0">
+											<div class="form-control-wrapper">
+												<input type="date" id="date" name="passengerDOB" class="form-control floating-label" placeholder="Date" onchange="dateOfBirthValidation()" >
+												<small>Enter birth date.</small>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-6">
+										<div class="md-form mb-0">
+											<input type="text" id="subject" name="busRouteFrom" class="form-control" onchange="busRouteFromValidation()" required>
+											<label for="subject" class="">Bus route from</label>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="md-form mb-0">
+											<input type="text" id="subject" name="busRouteTo" class="form-control" onchange="busRouteToValidation()" required>
+											<label for="subject" class="">Bus route to</label>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-12">
+										<div class="md-form mb-0">
+											<input type="text" id="subject" name="city" class="form-control" onchange="cityValidation()" required>
+											<label for="subject" class="">City</label>
+										</div>
+									</div>
+								</div>
+
+								<br>
+								<div class="row">
+									<div class="col-md-2">
+										<div class="custom-control custom-radio custom-control-inline">
+											<input type="radio" class="custom-control-input" id="defaultInline1" name="gender" value="male">
+											<label class="custom-control-label" for="defaultInline1">Male</label>
+										</div>
+									</div>
+
+									<div class="col-md-2">
+										<div class="custom-control custom-radio custom-control-inline">
+											<input type="radio" class="custom-control-input" id="defaultInline2" name="gender" value="female">
+											<label class="custom-control-label" for="defaultInline2">Female</label>
+										</div>									
+									</div>
+								</div>
+									
+								<div class="row">
+									<div class="col-md-12">
+										<div class="md-form">
+											<textarea type="text" id="message" name="message" rows="2" class="form-control md-textarea" onchange="addressValidation()" required></textarea>
+											<label for="message">Address</label>
+										</div>
+
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="exampleInputFile" class="bmd-label-floating" required>Upload Your Photo</label>
+											<input type="file" class="form-control-file" accept=".jpg,.jpeg,.png" name="myPhoto" id="exampleInputFile" onchange="selectedFile(this, 'photo')"  required>
+											<small>Photo size must be less than 1MB</small>&nbsp;<small id="photoStatus"></small>
+										</div>
+									</div>
+									
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="exampleInputFile" class="bmd-label-floating">Upload Your Aadhar Card</label>
+											<input type="file" class="form-control-file" accept=".jpg,.jpeg,.png" name="myAadharCard" onchange="selectedFile(this, 'aadhar_card')" id="exampleInputFile" required>
+											<small>Aadhar card size must be less than 1MB</small>&nbsp;<small id="aadharCardStatus"></small>
+										</div>
+									</div>
+								</div>
+							</form>
+                            <div class="text-center text-md-left">
+                                <button type="submit" class="btn btn-primary" onclick="sendData()">Submit</button>
+                                <button type="button" class="btn btn-primary" onclick="clearData()">clear</button>
+                            </div>
+							
+						</div>
+					</div>
+				</section>
+			</div>
+		</div>
+	
+	
+		<!-- MDB - SCRIPTS -->
+		<script type="text/javascript" src="MDB-Free/js/jquery-3.3.1.min.js"></script>
+		<script type="text/javascript" src="MDB-Free/js/popper.min.js"></script>
+		<script type="text/javascript" src="MDB-Free/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="MDB-Free/js/mdb.min.js"></script>
+		
+		<!-- Custom Scripts -->
+		<script src="scripts/validation-scripts/bus-pass-form-validation.js"> </script>
+		<script src="scripts/file-type-validation.js"> </script>
+		<script src="scripts/get-url.js"> </script>
+		<script>
+            function getApplicationNo(){
+                var applicationNo = getURL().split("=")[1];
+                document.getElementById("applicationNo").value = applicationNo;
+            }
+            function sendData(){
+                var applicationNo = document.busPassForm.applicationNo.value;
+                var passengerName = document.busPassForm.passengerName.value;
+                var passengerDOB = document.busPassForm.passengerDOB.value;
+                var busRouteFrom = document.busPassForm.busRouteFrom.value;
+                var busRouteTo  = document.busPassForm.busRouteTo.value;
+                var city = document.busPassForm.city.value;
+                var gender = document.busPassForm.gender.value;
+                var address = document.busPassForm.message.value;
+                if(passengerName == "" || passengerDOB == "" || busRouteFrom == "" || busRouteTo == "" ||  city == "" || gender == "" || address == ""){
+                    alert(" Please fill complete information!");
+                } else {
+                    var data = "?applicationNo="+applicationNo+"&passengerName="+passengerName+"&passengerDOB="+passengerDOB+"&busRouteFrom="+busRouteFrom+"&busRouteTo="+busRouteTo+"&address="+address+"&gender="+gender+"&city="+city;
+                    window.location.href = "jsp-pages/store-application-form-data.jsp"+data;
+                }
+            }
+            function clearData(){
+                document.busPassForm.applicationNo.value = "";
+                document.busPassForm.passengerName.value = "";
+                document.busPassForm.passengerDOB.value = "";
+                document.busPassForm.busRouteFrom.value = "";
+                document.busPassForm.busRouteTo.value = "";
+                document.busPassForm.city.value = "";
+                document.busPassForm.gender.value = "";
+                document.busPassForm.message.value = "";
+            }
+        </script>
+		<script src="scripts/jump-page-scripts.js"></script>
+	<body>
+</html>	

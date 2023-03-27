@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta http-equiv="x-ua-compatible" content="ie=edge">
+		<title>Material Design Bootstrap</title>
+		<!-- Font Awesome -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<!-- Bootstrap core CSS -->
+		<link href="MDB-Free/css/bootstrap.min.css" rel="stylesheet">
+		<!-- Material Design Bootstrap -->
+		<link href="MDB-Free/css/mdb.min.css" rel="stylesheet">
+		<!-- Your custom styles (optional) -->
+		<link href="MDB-Free/css/style.css" rel="stylesheet">		
+        <style>
+			.header_jumbotron{
+                background: url(images/background/pmt-image-1.jpg);
+                background-size: 100% 100%;
+			}
+		</style>
+        <style>
+            <!-- This is used for date-picker -->
+            [type="date"] {
+              background:#fff url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/calendar_2.png)  97% 50% no-repeat ;
+            }
+            [type="date"]::-webkit-inner-spin-button {
+              display: none;
+            }
+            [type="date"]::-webkit-calendar-picker-indicator {
+              opacity: 5;
+            }
+
+            /* custom styles */
+            label {
+              display: block;
+            }
+            input {
+              border: 1px solid #c4c4c4;
+              border-radius: 5px;
+              background-color: #fff;
+              padding: 3px 5px;
+              box-shadow: inset 0 3px 6px rgba(0,0,0,0.1);
+              width: 190px;
+            }
+		
+		</style>
+    </head>
+
+    <body onload="enableDisableButtons()">
+        <div class="w3-animate-top">
+            <nav class="navbar navbar-expand-lg navbar-dark primary-color">
+                <a class="navbar-brand" href="#">Bus Pass</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav" aria-controls="basicExampleNav"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="basicExampleNav">
+                    <ul class="navbar-nav mr-auto">
+                    </ul>
+                    <span class="navbar-text white-text">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" onclick="logoutPage()">Logout</a>
+                            </li>
+                        </ul>
+                    </span>
+                </div>
+            </nav>
+        </div>
+        <br>
+        <div class="container">
+            <div class="container">
+                <div class="card">
+                    <h5 class="card-header"><b> Renew Your Pass </b></h5>
+                    <div class="card-body">
+                        <div class="pmd-card pmd-card-inverse pmd-z-depth">
+                            <table id="tableInverse" class="table pmd-table table-hover table-striped table-inverse display responsive nowrap" cellspacing="0" width="100%">
+                                <thead id="submitted-application-table">
+                                    <tr>
+                                        <th>Please choose your from date:</th>
+                                        <th> <input type="date" id="date" name="passengerDOB" class="form-control floating-label" placeholder="Date"> </th>
+                                    </tr>
+                                </thead>
+                            </table>
+                            <center>
+                                <button type="button" class="btn btn-sm btn-primary" id="make-payment-id" onclick="makePayment()" disabled>Make Payment</button>
+                                <button type="button" class="btn btn-sm btn-primary" id="print-pass-id" onclick="printRenewPass()" disabled>Print Pass</button>
+                            </center>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- MDB - SCRIPTS -->
+		<script type="text/javascript" src="MDB-Free/js/jquery-3.3.1.min.js"></script>
+		<script type="text/javascript" src="MDB-Free/js/popper.min.js"></script>
+		<script type="text/javascript" src="MDB-Free/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="MDB-Free/js/mdb.min.js"></script>
+		
+        <script>
+			function getURL(){
+                var URL = window.location.href;
+                var splitURLByQuestionMark = URL.split("?");
+				return splitURLByQuestionMark[1];
+			}
+            function logoutPage(){
+                window.location = "jsp-pages/logout.jsp?"+getURL();
+            }
+			function goToDashboard(){
+				window.location = "dashboard.html?"+getURL();
+			}
+			function goToRenewPass(){
+				window.location = "renew-pass-page.html?"+getURL();
+			}
+            function enableDisableButtons(){
+                var applicationId = getURL().split("=")[1];
+                xmlhttp = new XMLHttpRequest();
+                xmlhttp.open("GET","/pmt-pass/jsp-pages/check-payment-status-of-renew-pass.jsp?applicationId="+applicationId,false);
+                xmlhttp.send();
+                output = xmlhttp.responseText;
+                var status = output.trim();
+                if(parseInt(status) == 1){
+                    document.getElementById("print-pass-id").disabled = false;
+                    document.getElementById("make-payment-id").disabled = true;
+                } else {
+                    document.getElementById("print-pass-id").disabled = true;
+                    document.getElementById("make-payment-id").disabled = false;
+                }
+            }
+            function makePayment(){
+                var applicationId = getURL().split("=")[1];
+                var fromDate = document.getElementById("date").value;
+                xmlhttp = new XMLHttpRequest();
+                xmlhttp.open("GET","/pmt-pass/jsp-pages/make-entry-to-renew-table.jsp?applicationId="+applicationId+"&fromDate="+fromDate,false);
+                xmlhttp.send();
+                output = xmlhttp.responseText;
+                var status = output.trim();
+                if(parseInt(status) == 1){
+                    window.location = "renew-payment.html?applicationId="+applicationId;
+                } else {
+                    alert(" There were error occurred.");
+                }
+            }
+            function printRenewPass(){
+                var applicationId = getURL().split("=")[1];
+                xmlhttp = new XMLHttpRequest();
+                xmlhttp.open("GET","/pmt-pass/jsp-pages/print-renew-pass.jsp?applicationId="+applicationId,false);
+                xmlhttp.send();
+                output = xmlhttp.responseText;
+                alert(output.trim());
+                var status = output.trim()
+                if(parseInt(status) == 0){
+                    alert("Pass cannot generated!");
+                }
+            }
+        </script>
+    </body>
+</html>

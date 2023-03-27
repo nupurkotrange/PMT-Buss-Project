@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+        <script src="bootstrap/jquery/jquery-3.3.1.js"> </script>
+        <script src="bootstrap/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="bootstrap/w3.css/w3.css"></link>
+        <script src="bootstrap/fonts/glyphicons-halflings-regular.ttf"></script>
+        <title>PMT Pass | Passenger Registration</title>
+        <style>
+			.header_jumbotron{
+                background: url(images/background/pmt-image-1.jpg);
+                background-size: 100% 100%;
+			}
+		</style>
+    </head>
+
+    <body onload="showHideButtons(getURL())">
+        <div class="w3-animate-top">
+            <nav class="navbar navbar-inverse">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>                        
+                        </button>
+                    </div>
+                    <div class="collapse navbar-collapse" id="myNavbar">
+                        <ul class="nav navbar-nav">
+                            <!-- <li class="active"><a href="index.html">Home</a></li> -->
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a onclick="logoutPage()"><span class="glyphicon glyphicon-user"></span>Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        
+        <div class="container">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="panel panel-primary">
+                            <div class="panel-body"><img src="images/background/pmt-image-1.jpg" class="img-responsive" style="width:100%" alt="Image"></div>
+                        </div>
+                    </div>
+					
+					<div class="row">
+						<div class="col-sm-6">
+							<div class="panel panel-primary">
+								<div class="panel-heading">PMT Pass Rate</div>
+								<div class="table-responsive">
+									<table class="table table-hover">
+										<thead>
+											<tr>
+												<th>Sr.No</th>
+												<th>Age</th>
+												<th>Rate</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>1</td>
+												<td>16-25</td>
+												<td>750</td>
+											</tr>
+											<tr>
+												<td>2</td>
+												<td>26-60</td>
+												<td>1400</td>
+											</tr>
+											<tr>
+												<td>3</td>
+												<td>Above 61</td>
+												<td>900</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+						
+						<div class="col-sm-6">
+							<div class="panel panel-info">
+								<button type="submit" id="applyButton" class="btn btn-primary btn-block" onclick="goToDashboard()">Apply Online</button>
+								<button type="submit" id="dashboardButton" style="display:none" class="btn btn-primary btn-block" onclick="goToDashboard()">Dashboard</button>
+								<button type="submit" class="btn btn-primary btn-block" onclick="goToRenewPass()">Renew Pass</button>
+							</div>
+						</div>
+					</div>					
+                </div>
+            </div>
+        </div>
+        
+        <script>
+			function getURL(){
+                var URL = window.location.href;
+                var splitURLByQuestionMark = URL.split("?");
+				return splitURLByQuestionMark[1];
+			}
+            function logoutPage(){
+                window.location = "jsp-pages/logout.jsp?"+getURL();
+            }
+			function goToDashboard(){
+				window.location = "dashboard.html?"+getURL();
+			}
+			function goToRenewPass(){
+				window.location = "renew-pass-page.html?"+getURL();
+			}
+        </script>
+        <script src="scripts/show-hide-buttons.js"></script>
+    </body>
+</html>

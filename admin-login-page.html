@@ -1,0 +1,67 @@
+<!--
+    Code Art Solutions
+    Project Name: Computerized-Dairy
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- Font Awesome -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<!-- Bootstrap core CSS -->
+		<link href="MDB-Free/css/bootstrap.min.css" rel="stylesheet">
+		<!-- Material Design Bootstrap -->
+		<link href="MDB-Free/css/mdb.min.css" rel="stylesheet">
+		<!-- Your custom styles (optional) -->
+		<link href="MDB-Free/css/style.css" rel="stylesheet">		
+        <title>PMT Pass | Admin Login</title>
+        <style>
+            .jumbotron{
+                background: url(images/background/login-background.jpg);
+                background-size: 100% 100%;
+            }
+        </style>
+    </head>
+    
+    <body>
+        <div class="container">
+            <br>
+            <div class="jumbotron">
+                <br><br><br><br>
+                
+                <font color="white">
+                    <h2 align="center">Admin Login</h2>
+                    <form action="jsp-pages/check-admin-login-validity.jsp">
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="text" class="form-control" id="email-id" maxlength="10" placeholder="Enter email id" name="email-id" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pwd">Password:</label>
+                            <input type="password" class="form-control" id="password" placeholder="Enter password" name="password" required>
+                        </div>
+                        <button type="submit" class="btn btn-default">Submit</button>
+                        <button type="reset" class="btn btn-default">Clear</button>
+                        <button type="button" class="btn btn-default" onclick="goToHomePage()">Home</button>
+                    </form>
+                </font>
+                
+                <br><br><br><br>
+            </div>
+        </div>
+		<!-- MDB - SCRIPTS -->
+		<script type="text/javascript" src="MDB-Free/js/jquery-3.3.1.min.js"></script>
+		<script type="text/javascript" src="MDB-Free/js/popper.min.js"></script>
+		<script type="text/javascript" src="MDB-Free/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="MDB-Free/js/mdb.min.js"></script>
+		
+		<!-- Custom Scripts -->
+        <script>
+            function goToHomePage(){
+                window.location = "index.html";
+            }
+        </script>
+    </body>
+<html>

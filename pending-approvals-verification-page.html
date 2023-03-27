@@ -1,0 +1,148 @@
+<html>
+	<head>
+        <meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta http-equiv="x-ua-compatible" content="ie=edge">
+		<title>PMT Pass | Pending Approvals</title>
+		<!-- Bootstrap core CSS -->
+		<link href="MDB-Free/css/bootstrap.min.css" rel="stylesheet">
+		<!-- Material Design Bootstrap -->
+		<link href="MDB-Free/css/mdb.min.css" rel="stylesheet">
+		<!-- Your custom styles (optional) -->
+		<link href="MDB-Free/css/style.css" rel="stylesheet">			
+	</head>
+	
+	<body onload="showApplicationOnVertificationPage(getURL())">
+		<div class="jumbotron">
+			<div class="row">
+				<div class="col-md-12 mb-4">
+					<div class="white-text card green text-center z-depth-2">
+						<div class="card-body">
+							<h2>Application</h2>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-md-12 mb-4">
+					<div class="card blue text-center z-depth-2">
+						<h5 class="card-header indigo white-text">Applicant's Details</h5>
+						<div class="card-body">
+							<table id="tableInverse" class="table white-text pmd-table table-hover table-striped table-inverse display responsive nowrap" cellspacing="0" width="100%">
+								<thead id="show-application-id">
+								</thead>
+							</table>
+						</div>
+					</div>	
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12 mb-4">
+					<div class="card blue text-center z-depth-2">
+						<div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6 mb-4">
+                                    <h5 class="card-header indigo white-text">Photograph</h5>
+                                    <div class="card">
+                                        <img id="photo-id" src=""></img>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <h5 class="card-header indigo white-text">Aadhar Card</h5>
+                                    <div class="card">
+                                        <img id="aadhar-card-id" src=""></img>
+                                    </div>
+                                </div>
+                            </div>
+						</div>
+					</div>	
+				</div>
+            </div>
+			<div class="row">
+				<div class="col-md-12 mb-4">
+					<div class="card blue text-center z-depth-2">
+						<h5 class="card-header indigo white-text">Approve / Reject</h5>
+						<div class="card-body">
+							<button type="button" class="btn btn-success" onclick="approveApplication()">Approve</button>
+							<button type="button" class="btn btn-danger" data-toggle="collapse" data-target="#collapseExample"  aria-expanded="false" aria-controls="collapseExample">Reject</button>
+                            <div class="collapse" id="collapseExample">
+                                <div class="mt-3">
+                                    <div class="card-body">
+                                        <hr>
+                                        <h4 class="card-title" align="center"> <font color="white"> Reason of Reject </font> </h4>
+                                        <div class="pmd-card pmd-card-inverse pmd-z-depth">
+                                            <table id="tableInverse" class="table pmd-table table-hover table-striped table-inverse display responsive nowrap" cellspacing="0" width="100%">
+                                                <thead id="show-application-status">
+                                                    <div class="card">
+                                                        <input type="hidden" id="applicationId" name="applicationId" value=""></input>
+                                                        <textarea id="reason-of-reject" placeholder="Enter your reason of rejection of application" rows="5" cols="50"> </textarea>
+                                                        <button type="button" class="btn btn-success" onclick="submitReason()">Click here to submit your response.</button>
+                                                    </div>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="alert alert-success" role="alert" id="success-alert-id" style="display:none">
+                                Successfully Submitted.
+                            </div>
+						</div>
+					</div>	
+				</div>
+			</div>
+		</div>
+        
+        <script>
+            function getApplicationId(){
+                var applicationId = document.getElementById("applicationId").value;
+                return applicationId;
+            }
+        </script>
+        <script src="scripts/submit-response.js"></script>
+        <script src="scripts/approve-application.js"></script>
+        <!--
+		<div class="modal fade" id="photoModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLongTitle">Photo</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<img id="photo-id" src=""></img>
+					</div>
+				</div>
+			</div>
+		</div>		
+		
+		<div class="modal fade" id="aadharCardModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLongTitle">Aadhar Card</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<img id="aadhar-card-id" src=""></img>
+					</div>
+				</div>
+			</div>
+		</div>		
+        -->
+		<!-- MDB - SCRIPTS -->
+		<script type="text/javascript" src="MDB-Free/js/jquery-3.3.1.min.js"></script>
+		<script type="text/javascript" src="MDB-Free/js/popper.min.js"></script>
+		<script type="text/javascript" src="MDB-Free/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="MDB-Free/js/mdb.min.js"></script>
+        
+        <!-- Customer Scripts -->
+        <script src="scripts/show-application-on-vertification-page.js"></script>
+        <script src="scripts/get-url.js"></script>
+	<body>
+</html>	

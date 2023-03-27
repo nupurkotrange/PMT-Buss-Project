@@ -1,0 +1,147 @@
+
+<!--
+    Code Art Solutions
+    Project Name: online-pizza-shopping
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+        <script src="bootstrap/jquery/jquery-3.3.1.js"> </script>
+        <script src="bootstrap/js/bootstrap.min.js"></script>
+        <script src="bootstrap/fonts/glyphicons-halflings-regular.ttf"></script>
+        <script src="scripts/payment-validation.js"></script>
+        <link rel="stylesheet" href="bootstrap/w3.css/w3.css">
+        
+        <title>PMT-Pass | Payment</title>
+        <style>
+            body { margin-top:20px; }
+            .panel-title {display: inline;font-weight: bold;}
+            .checkbox.pull-right { margin: 0; }
+            .pl-ziro { padding-left: 0px; }        
+        </style>
+    </head>
+    
+    <body onload="onLoadFunctions()">
+        <div class="container">
+            <div class="jumbotron" style="background-color:#b3e5fc">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <img class="img-responsive" src="images/payment/payment.png" class="img-rounded" id="Panel_Image">
+                            </div>
+                        </div>
+                    </div>    
+                    
+                    <div class="col-xs-12 col-md-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">
+                                    Payment Details
+                                </h3>
+                            </div>
+                            <div class="panel-body">
+                                <form role="form" action="" method="post">
+                                    <div class="form-group">
+                                        <label for="cardNumber">
+                                            CARD NUMBER</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="cardNumber" name="cardNumber" placeholder="Enter 16 digit card number"
+                                                required autofocus onchange="cardNumberValidation()"/>
+                                            <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-7 col-md-7">
+                                            <div class="form-group">
+                                                <label for="expityMonth">
+                                                    ENTER EXPIRY DATE
+                                                </label>
+                                                <div class="col-xs-6 col-lg-6 pl-ziro">
+                                                    <input type="text" class="form-control" id="expiryMonth" name="expiryMonth" placeholder="MM" onchange="checkExpiryMonth()" required />
+                                                </div>
+                                                <div class="col-xs-6 col-lg-6 pl-ziro">
+                                                    <input type="text" class="form-control" id="expiryYear" name="expiryYear" placeholder="YY" onchange="checkExpiryYear()" required />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-5 col-md-5 pull-right">
+                                            <div class="form-group">
+                                                <label for="cvCode">
+                                                    CV CODE</label>
+                                                <input type="password" class="form-control" id="cvCode" name="cvCode" placeholder="CV" onchange="checkCVVNo()" required/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <ul class="nav nav-pills nav-stacked">
+                                <li class="active">
+                                    <a href="#">
+                                        <span class="badge pull-right">
+                                            <i class="fa fa-rupee" value="" id="final-amount-print-id"></i>
+                                        </span> 
+                                        Final Payment Amount
+                                    </a>
+                                </li>
+                            </ul>
+                            <br/>
+                            <button type="button" class="btn btn-success btn-lg btn-block" onclick="storePaymentDetails()">Pay</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <script>
+            function onLoadFunctions(){
+                var amount = getAmount(getURL());
+            }
+            function getAmount(url){
+                var applicationId = url.split("=")[1];
+                xmlhttp = new XMLHttpRequest();
+                xmlhttp.open("GET","/pmt-pass/jsp-pages/get-payment-amount.jsp?applicationId="+applicationId,false);
+                xmlhttp.send();
+                output = xmlhttp.responseText;
+                document.getElementById("final-amount-print-id").innerHTML = "INR "+output.trim()+"/-";
+                document.getElementById("final-amount-print-id").value = output.trim();
+            }
+            function isEmptyFields(){
+                var cardNumber = document.getElementById("cardNumber").value;
+                var expiryMonth = document.getElementById("expiryMonth").value;
+                var expiryYear = document.getElementById("expiryYear").value;
+                var cvCode = document.getElementById("cvCode").value;
+                if(cardNumber == "" || expiryMonth == "" || expiryYear == "" || cvCode == ""){
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+            function storePaymentDetails(){
+                if(isEmptyFields()){
+                    alert(" Please fill all the details!");
+                    return;
+                }
+                var applicationId = getURL().split("=")[1];
+                var amount = document.getElementById("final-amount-print-id").value;
+                
+                xmlhttp = new XMLHttpRequest();
+                xmlhttp.open("GET","/pmt-pass/jsp-pages/renew-store-payment-details.jsp?applicationId="+applicationId+"&amount="+amount,false);
+                xmlhttp.send();
+                output = xmlhttp.responseText;
+                var paymentStatus = output.trim();
+                if(parseInt(paymentStatus)){
+                    alert(" Payment Successful.");
+                    window.location = "renew-pass-page.html?applicationId="+applicationId;
+                } else {
+                    alert(" Payment not successful.");
+                }
+            }
+        </script>
+        <script src="scripts/get-url.js"></script>
+    </body>
+</html>
